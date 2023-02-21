@@ -1,0 +1,151 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: Reservation JSON-RPC
+  description: A collection holding all the Reservation JSON-RPC API calls
+host: localhost
+basePath: /
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /amount:
+    post:
+      summary: Returns amount of goods in warehouse.
+      description: Optional extended description in Markdown.
+      produces:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/amountRequest'
+      responses:
+        200:
+          description: 'Successful operation'
+  /reserve:
+    post:
+      summary: Reserves goods in warehouse.
+      description: Optional extended description in Markdown.
+      produces:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/reserveRequest'
+      responses:
+        200:
+          description: 'Successful operation'
+  /release:
+    post:
+      summary: Releases goods in warehouse.
+      description: Optional extended description in Markdown.
+      produces:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/releaseRequest'
+      responses:
+        200:
+          description: 'Successful operation'
+definitions:
+  amountRequest:
+    title: amountRequest
+    example:
+      jsonrpc: '2.0'
+      method: 'getAmount'
+      params:
+        - warehouse_id: 'warehouse01'
+      id: 1
+    type: object
+    properties:
+      jsonrpc:
+        type: string
+      method:
+        type: string
+      params:
+        type: object
+        properties:
+          warehouse_id:
+            type: string
+      id:
+        type: integer
+        format: int32
+    required:
+    - jsonrpc
+    - method
+    - params
+    - id
+  reserveRequest:
+    title: reserveRequest
+    example:
+      jsonrpc: '2.0'
+      method: 'reserve'
+      params:
+        warehouse_id: 'warehouse01'
+        codes: ['uniqueGoodCode01', 'uniqueGoodCode02']
+      id: 1
+    type: object
+    properties:
+      jsonrpc:
+        type: string
+      method:
+        type: string
+      params:
+        type: object
+        properties:
+          warehouse_id:
+            type: string
+          codes:
+            type: array
+            items:
+              type: string
+      id:
+        type: integer
+        format: int32
+    required:
+    - jsonrpc
+    - method
+    - params
+    - id
+  releaseRequest:
+    title: release
+    example:
+      jsonrpc: '2.0'
+      method: 'release'
+      params:
+        warehouse_id: 'warehouse01'
+        codes: ["uniqueGoodCode01", "uniqueGoodCode02"]
+      id: 1
+    type: object
+    properties:
+      jsonrpc:
+        type: string
+      method:
+        type: string
+      params:
+        type: object
+        properties:
+          warehouse_id:
+            type: string
+          codes:
+            type: array
+            items:
+              type: string
+      id:
+        type: integer
+        format: int32
+    required:
+    - jsonrpc
+    - method
+    - params
+    - id

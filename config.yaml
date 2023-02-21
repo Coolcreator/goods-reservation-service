@@ -1,0 +1,13 @@
+---
+postgres:
+  host: localhost
+  port: 5432
+  user: admin
+  db: warehouse
+  ssl_mode: "disable"
+
+logger:
+  development: true
+  level: info
+  encoding: console
+...

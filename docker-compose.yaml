@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  reserve_service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: reserve_service
+    restart: always
+    ports:
+      - 8080:8080
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:15.2-alpine
+    container_name: postgres_for_reserve
+    ports:
+      - '5432:5432'
+    volumes:
+    - ./migration/sql/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
+    - ./migration/sql/000001_init.up.sql:/docker-entrypoint-initdb.d/000001_init.up.sql
+    - ./migration/sql/000002_fill.up.sql:/docker-entrypoint-initdb.d/000002_fill.up.sql
+    env_file:
+      - .env
